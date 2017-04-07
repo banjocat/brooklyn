@@ -4,8 +4,6 @@ services:
         image: banjocat/tivix-brooklyn
         build: .
         volumes:
-            - "./actions:/bot/actions"
-            - "./bot.js:/bot/bot.js"
             - "./jsonstore:/bot/jsonstore"
         environment:
             BOT_TOKEN: ${BOT_TOKEN}

@@ -1,2 +1,4 @@
 env.sh
 node_modules
+jsonstore
+*.pyc
