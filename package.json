@@ -1,0 +1,12 @@
+{
+  "name": "brooklyn",
+  "version": "0.0.1",
+  "description": "Tivx brooklyn slackbot",
+  "main": "index.js",
+  "repository": "www.tivix.com",
+  "author": "banjocat",
+  "license": "MIT",
+  "dependencies": {
+    "botkit": "^0.5.2"
+  }
+}
