@@ -54,7 +54,7 @@ controller.hears(['list.*(food|eat)'], Direct, (bot, message) => {
 });
 
 // Getting food choices
-controller.hears(['(pick|eat|tell).*(food|eat)'], Direct, (bot, message) => {
+controller.hears(['(what|pick|eat|tell).*(food|eat)'], Direct, (bot, message) => {
     controller.storage.channels.get(message.channel, (err, data) => {
         if ( err || ! "food" in data || data['food'].length == 0 ) {
             bot.reply(message, 'No food choices have been added yet.');

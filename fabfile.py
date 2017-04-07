@@ -5,12 +5,12 @@ env.user = 'root'
 env.hosts = ['54.152.187.197']
 
 
-def build(key=os.environ['BOT_TOKEN']):
+def build(key=os.environ['PRODUCTION_TOKEN']):
     """Builds and pushes docker image"""
     local('docker-compose build')
     local('docker push banjocat/tivix-brooklyn')
 
-def deploy(key=os.environ['BOT_TOKEN']):
+def deploy(key=os.environ['PRODUCTION_TOKEN']):
     """Deploy to jacks-instance on lightsail"""
     run('mkdir -p /app/brooklyn-bot')
     with cd('/app/brooklyn-bot'):
