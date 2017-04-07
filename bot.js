@@ -19,14 +19,14 @@ controller.on('channel_joined', (bot, message) => {
 });
 
 
-controller.hears(['\bhello\b', '\bhi\b', '\byo\b'], Direct, (bot, message) => {
+controller.hears(['hello'], Direct, (bot, message) => {
     bot.reply(message, Greeting());
 });
 
 controller.hears(['help', 'what.*do'], Direct, (bot, message) => {
     bot.reply(message, `
     Currently, I can't do very much.
-    But I can say hi if you say 'hi @brooklyn'
+    But I can say hello if you say 'hello @brooklyn'
     And I also can pick food. Examples
     \`\`\`
     Add food pizza @brooklyn
@@ -42,7 +42,7 @@ controller.hears(['help', 'what.*do'], Direct, (bot, message) => {
 });
 
 // Getting food choices
-controller.hears(['(list|tell|what).*(food|eat)'], Direct, (bot, message) => {
+controller.hears(['list.*(food|eat)'], Direct, (bot, message) => {
     controller.storage.channels.get(message.channel, (err, data) => {
         if ( err || ! "food" in data || data['food'].length == 0 ) {
             bot.reply(message, 'No food choices have been added yet.');
@@ -54,7 +54,7 @@ controller.hears(['(list|tell|what).*(food|eat)'], Direct, (bot, message) => {
 });
 
 // Getting food choices
-controller.hears(['(pick|eat|random.*).*(food|eat)'], Direct, (bot, message) => {
+controller.hears(['(pick|eat|tell).*(food|eat)'], Direct, (bot, message) => {
     controller.storage.channels.get(message.channel, (err, data) => {
         if ( err || ! "food" in data || data['food'].length == 0 ) {
             bot.reply(message, 'No food choices have been added yet.');

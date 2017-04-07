@@ -1,5 +1,5 @@
 import os
-from fabric.api import local, run, cd, put, hosts, env
+from fabric.api import local, run, cd, put, hosts, env, hide
 
 env.user = 'root'
 env.hosts = ['54.152.187.197']
@@ -16,7 +16,8 @@ def deploy(key=os.environ['BOT_TOKEN']):
     with cd('/app/brooklyn-bot'):
         put('./docker-compose.yml', 'docker-compose.yml')
         run('docker-compose pull')
-        run('BOT_TOKEN=%s docker-compose up -d' % key)
+        with hide('running'):
+            run('BOT_TOKEN=%s docker-compose up -d' % key)
 
 
 def down():
