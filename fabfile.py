@@ -5,6 +5,16 @@ env.user = 'root'
 env.hosts = ['54.152.187.197']
 
 
+def encrypt(filename, key=os.environ['SECRET_KEY']):
+    """Encrypt a file"""
+    local("gpg --passphrase %s -c %s" % (key, filename))
+
+def decrypt(filename, key=os.environ['SECRET_KEY']):
+    """Decrypt a file"""
+    outfile = filename.replace('.gpg', '')
+    local("gpg --decrypt -o %s --passphrase %s --decrypt %s" % (
+        outfile, key, filename))
+
 def build(key=os.environ['PRODUCTION_TOKEN']):
     """Builds and pushes docker image"""
     local('docker-compose build')

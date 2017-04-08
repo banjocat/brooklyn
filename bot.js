@@ -53,6 +53,7 @@ controller.hears(['list.*(food|eat)'], Direct, (bot, message) => {
     });
 });
 
+
 // Getting food choices
 controller.hears(['(what|pick|eat|tell).*(food|eat)'], Direct, (bot, message) => {
     controller.storage.channels.get(message.channel, (err, data) => {
