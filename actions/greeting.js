@@ -1,11 +1,12 @@
 'use strict';
+const _ = require('lodash');
 
 const greetings = [
     'Greetings earthling!',
     'Hello',
 ]
 var Greeting = () => {
-    return greetings[Math.floor(Math.random() * greetings.length)];
+    return _.sample(greetings);
 }
 
 
