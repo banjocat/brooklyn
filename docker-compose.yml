@@ -5,7 +5,9 @@ services:
         build: .
         volumes:
             - "./jsonstore:/bot/jsonstore"
+            - "./client_secret.json:/bot/client_secret.json"
+            - ".credentials:/bot/.credentials"
         environment:
-            BOT_TOKEN: ${BOT_TOKEN}
+            BOT_TOKEN: ${PRODUCTION_TOKEN}
             SPREADSHEET_ID: ${SPREADSHEET_ID}
             REPORT_CHANNEL: "#tivix-ny"

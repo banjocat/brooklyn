@@ -14,6 +14,7 @@ def decrypt(filename, key=os.environ['SECRET_KEY'], mode=local):
     """Decrypt a file"""
     outfile = filename.replace('.gpg', '')
     with hide('running'):
+        mode("rm -rf %s" % outfile)
         mode("gpg --decrypt -o %s --passphrase %s --decrypt %s" % (
             outfile, key, filename))
 
@@ -28,15 +29,15 @@ def deploy(key=os.environ['PRODUCTION_TOKEN']):
     with cd('/app/brooklyn-bot'):
         put('./docker-compose.yml', 'docker-compose.yml')
         put('./secrets.sh.gpg', '.')
-        put('./client_secret.json.gpg')
+        put('./client_secret.json.gpg', '.')
         # Now decrypt them
         decrypt('secrets.sh.gpg', mode=run)
-        decrypt('client_secret.sh.gpg', mode=run)
+        decrypt('client_secret.json.gpg', mode=run)
         run('chmod 400 secrets.sh')
-        run('chmod 400 client_secret.sh')
-        run('docker-compose pull')
+        run('chmod 400 client_secret.json')
+        run('. ./secrets.sh && docker-compose pull')
         with hide('running'):
-            run('. secrets.sh && docker-compose up -d' % key)
+            run('. ./secrets.sh && docker-compose up -d')
 
 
 def down():

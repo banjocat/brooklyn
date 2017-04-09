@@ -4,3 +4,4 @@ jsonstore
 *.pyc
 client_secret.json
 secrets.sh
+.credentials

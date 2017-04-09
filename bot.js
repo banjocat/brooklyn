@@ -15,21 +15,6 @@ const bot = controller.spawn({
 const Direct = ['direct_message','direct_mention','mention'];
 
 
-controller.on('hello', (bot, message) => {
-    bot.say({
-        text: 'Never fear, Brooklyn is here!',
-        channel: process.env.REPORT_CHANNEL,
-    });
-});
-
-controller.on('goodbye', (bot, message) => {
-    bot.say({
-        text: 'Goodbye for now.',
-        channel: '#jack-test-channel',
-    });
-});
-
-
 controller.hears(['hello'], Direct, (bot, message) => {
     bot.reply(message, Greeting());
 });
