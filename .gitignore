@@ -5,3 +5,4 @@ jsonstore
 client_secret.json
 secrets.sh
 .credentials
+.credentialssheets.googleapis.com-nodejs-quickstart.json

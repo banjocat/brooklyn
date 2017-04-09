@@ -36,6 +36,9 @@ controller.hears(['help', 'what.*do'], Direct, (bot, message) => {
 
 // Getting food choices
 controller.hears(['list.*(food|eat)'], Direct, (bot, message) => {
+    bot.reply(message,
+        `*Spread sheet for editing:* docs.google.com/spreadsheets/d/${process.env.SPREADSHEET_ID}`);
+    bot.reply(message, '*List of food options*');
     getFoodWithHyperlink( (food) => {
         _.each(food, (choice) => {
             if (choice) {
