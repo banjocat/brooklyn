@@ -7,3 +7,5 @@ services:
             - "./jsonstore:/bot/jsonstore"
         environment:
             BOT_TOKEN: ${BOT_TOKEN}
+            SPREADSHEET_ID: ${SPREADSHEET_ID}
+            REPORT_CHANNEL: "#tivix-ny"

@@ -2,4 +2,5 @@ env.sh
 node_modules
 jsonstore
 *.pyc
-google.json
+client_secret.json
+secrets.sh
