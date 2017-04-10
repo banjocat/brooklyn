@@ -7,7 +7,7 @@ const _ = require('lodash');
 // If modifying these scopes, delete your previously saved credentials
 // at ~/.credentials/sheets.googleapis.com-nodejs-quickstart.json
 var SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly'];
-var TOKEN_DIR = '.credentials';
+var TOKEN_DIR = '.credentials/';
 var TOKEN_PATH = TOKEN_DIR + 'sheets.googleapis.com-nodejs-quickstart.json';
 
 // This makes sure that it doesn't evaluate HYPERLINK to just a name
@@ -41,8 +41,19 @@ const getFoodWithHyperlink = (foodCallback) => {
         foodCallback(foodWithHyperlink);
     });
 }
+
 const getFoodMatrix = (foodCallback) => {
     // Load client secrets from a local file.
+    accessSpreadsheet('A2:Z20', foodCallback);
+};
+
+const bootstrap = () => {
+    accessSpreadsheet('A1', () => {
+        console.log('Register done');
+    });
+};
+
+const accessSpreadsheet = (spreadsheetRange, callback) => {
     fs.readFile('client_secret.json', function processClientSecrets(err, content) {
         if (err) {
             console.log('Error loading client secret file: ' + err);
@@ -50,9 +61,24 @@ const getFoodMatrix = (foodCallback) => {
         }
         // Authorize a client with the loaded credentials, then call the
         // Google Sheets API.
-        authorize(JSON.parse(content), listFood, foodCallback);
+        authorize(JSON.parse(content), (auth) => {
+            var sheets = google.sheets('v4');
+            sheets.spreadsheets.values.get({
+                auth: auth,
+                spreadsheetId: process.env.SPREADSHEET_ID,
+                range: spreadsheetRange,
+            }, function(err, response) {
+                if (err) {
+                    console.log('The API returned an error: ' + err);
+                    return;
+                }
+                var rows = response.values
+                callback(rows);
+            });
+        });
     });
-}
+};
+
 
 
 /**
@@ -62,7 +88,7 @@ const getFoodMatrix = (foodCallback) => {
  * @param {Object} credentials The authorization client credentials.
  * @param {function} callback The callback to call with the authorized client.
  */
-function authorize(credentials, callback, foodCallback) {
+function authorize(credentials, callback) {
   var clientSecret = credentials.installed.client_secret;
   var clientId = credentials.installed.client_id;
   var redirectUrl = credentials.installed.redirect_uris[0];
@@ -72,10 +98,10 @@ function authorize(credentials, callback, foodCallback) {
   // Check if we have previously stored a token.
   fs.readFile(TOKEN_PATH, function(err, token) {
     if (err) {
-      getNewToken(oauth2Client, callback, foodCallback);
+      getNewToken(oauth2Client, callback);
     } else {
       oauth2Client.credentials = JSON.parse(token);
-      callback(oauth2Client, foodCallback);
+      callback(oauth2Client);
     }
   });
 }
@@ -88,7 +114,7 @@ function authorize(credentials, callback, foodCallback) {
  * @param {getEventsCallback} callback The callback to call with the authorized
  *     client.
  */
-function getNewToken(oauth2Client, callback, foodCallback) {
+function getNewToken(oauth2Client, callback) {
   var authUrl = oauth2Client.generateAuthUrl({
     access_type: 'offline',
     scope: SCOPES
@@ -107,7 +133,7 @@ function getNewToken(oauth2Client, callback, foodCallback) {
       }
       oauth2Client.credentials = token;
       storeToken(token);
-      callback(oauth2Client, foodCallback);
+      callback(oauth2Client);
     });
   });
 }
@@ -129,24 +155,10 @@ function storeToken(token) {
   console.log('Token stored to ' + TOKEN_PATH);
 }
 
-/**
- * Print the names and majors of students in a sample spreadsheet:
- * https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/edit
- */
-function listFood(auth, foodCallback) {
-  var sheets = google.sheets('v4');
-  sheets.spreadsheets.values.get({
-    auth: auth,
-      spreadsheetId: process.env.SPREADSHEET_ID,
-    range: 'A2:Z20',
-  }, function(err, response) {
-    if (err) {
-      console.log('The API returned an error: ' + err);
-      return;
-    }
-    var rows = response.values
-    foodCallback(rows)
-  });
-}
 
-module.exports = getFoodWithHyperlink;
+module.exports = {
+    'getFoodWithHyperlink': getFoodWithHyperlink,
+    'bootstrap': bootstrap,
+};
+
+

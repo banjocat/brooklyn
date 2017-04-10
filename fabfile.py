@@ -23,7 +23,7 @@ def build(key=os.environ['PRODUCTION_TOKEN']):
     local('docker-compose build')
     local('docker push banjocat/tivix-brooklyn')
 
-def deploy(key=os.environ['PRODUCTION_TOKEN']):
+def deploy(key=os.environ['PRODUCTION_TOKEN'], bootstrap=False):
     """Deploy to jacks-instance on lightsail"""
     run('mkdir -p /app/brooklyn-bot')
     with cd('/app/brooklyn-bot'):
@@ -37,7 +37,10 @@ def deploy(key=os.environ['PRODUCTION_TOKEN']):
         run('chmod 400 client_secret.json')
         run('. ./secrets.sh && docker-compose pull')
         with hide('running'):
+            if bootstrap:
+                run('. ./secrets.sh && docker-compose run bot node bootstrap.js');
             run('. ./secrets.sh && docker-compose up -d')
+
 
 
 def down():

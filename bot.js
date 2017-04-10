@@ -2,7 +2,7 @@
 const BotKit = require('botkit');
 const Greeting = require('./actions/greeting');
 const _ = require('lodash');
-const getFoodWithHyperlink = require('./models/spreadsheet.js');
+const Spreadsheet = require('./models/spreadsheet.js');
 
 const controller = BotKit.slackbot({
     json_file_store: './jsonstore/store.json',
@@ -39,7 +39,7 @@ controller.hears(['list.*(food|eat)'], Direct, (bot, message) => {
     bot.reply(message,
         `*Spread sheet for editing:* docs.google.com/spreadsheets/d/${process.env.SPREADSHEET_ID}`);
     bot.reply(message, '*List of food options*');
-    getFoodWithHyperlink( (food) => {
+    Spreadsheet.getFoodWithHyperlink( (food) => {
         _.each(food, (choice) => {
             if (choice) {
                 const msg = `${choice.name}: ${choice.url}\n`
@@ -52,7 +52,7 @@ controller.hears(['list.*(food|eat)'], Direct, (bot, message) => {
 
 // Getting food choices
 controller.hears(['(choose|what|pick|eat|tell).*(food|eat)'], Direct, (bot, message) => {
-    getFoodWithHyperlink( (food) => {
+    Spreadsheet.getFoodWithHyperlink( (food) => {
         const foodNames = _.map(food, 'name');
         bot.reply(message, "I choose " + _.sample(foodNames));
     });
