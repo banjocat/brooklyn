@@ -1,4 +1,5 @@
 'use strict';
+const fs = require('fs');
 const BotKit = require('botkit');
 const Greeting = require('./actions/greeting');
 const _ = require('lodash');
@@ -14,19 +15,19 @@ const bot = controller.spawn({
 
 const Direct = ['direct_message','direct_mention','mention'];
 
+// Setup all the simple conversations from the json file
+const simple = JSON.parse(fs.readFileSync('./simpleconversation.json', 'utf8'));
+_.mapKeys(simple, (value, key) => {
+    controller.hears(key, Direct, (bot, message) => {
+        bot.reply(message, value);
+    });
+});
+
 
 controller.hears(['hello'], Direct, (bot, message) => {
     bot.reply(message, Greeting());
 });
 
-
-controller.hears(['(when|can).*beer'], Direct, (bot, message) => {
-    bot.reply(message, 'Beer is on Friday');
-});
-
-controller.hears(['(get|bring).*beer'], Direct, (bot, message) => {
-    bot.reply(message, 'No, I have no arms.');
-});
 
 controller.hears(['(is|time).*(beer|friday)'], Direct, (bot, message) => {
     const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday',
