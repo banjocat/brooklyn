@@ -19,6 +19,28 @@ controller.hears(['hello'], Direct, (bot, message) => {
     bot.reply(message, Greeting());
 });
 
+
+controller.hears(['(when|can).*beer'], Direct, (bot, message) => {
+    bot.reply(message, 'Beer is on Friday');
+});
+
+controller.hears(['(get|bring).*beer'], Direct, (bot, message) => {
+    bot.reply(message, 'No, I have no arms.');
+});
+
+controller.hears(['is.*(beer|friday)'], Direct, (bot, message) => {
+    const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday',
+        'Thursday', 'Friday', 'Saturday'];
+    const date = new Date();
+    const today = days[date.getDay()];
+    if (today == 'Friday')
+        bot.replay(message, 'Yes, is beer time!');
+    else 
+        bot.reply(message, `No, it is ${today}`);
+});
+
+
+
 controller.hears(['help', 'what.*do'], Direct, (bot, message) => {
     bot.reply(message, `
     Currently, I can't do very much.
