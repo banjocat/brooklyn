@@ -16,7 +16,7 @@ const bot = controller.spawn({
 const Direct = ['direct_message','direct_mention','mention'];
 
 // Setup all the simple conversations from the json file
-const simple = JSON.parse(fs.readFileSync('./simpleconversation.json', 'utf8'));
+const simple = JSON.parse(fs.readFileSync('./models/simpleconversation.json', 'utf8'));
 _.mapKeys(simple, (value, key) => {
     controller.hears(key, Direct, (bot, message) => {
         bot.reply(message, value);

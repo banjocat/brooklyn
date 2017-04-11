@@ -1,0 +1,9 @@
+{
+    "(when|can).*beer": "Beer is on Friday",
+    "pick.*day": "No. Pick a day yourself",
+    "portland": "NYC is better than portland",
+    "pizza": "I love pizza",
+    "(get|bring).*beer": "No, I have no arms."
+}
+
+
