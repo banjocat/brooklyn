@@ -1,3 +1,4 @@
+[![CircleCI](https://circleci.com/gh/banjocat/brooklyn.svg?style=svg)](https://circleci.com/gh/banjocat/brooklyn)
 # Brooklyn Tivix Bot
 
 This is a nodejs practice project.

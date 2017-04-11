@@ -21,7 +21,7 @@ def decrypt(filename, key=os.environ['SECRET_KEY'], mode=local):
 def build(key=os.environ['PRODUCTION_TOKEN']):
     """Builds and pushes docker image"""
     local('docker-compose build')
-    local('docker push banjocat/tivix-brooklyn')
+    local('docker-compose push bot')
 
 def deploy(key=os.environ['PRODUCTION_TOKEN'], bootstrap=False):
     """Deploy to jacks-instance on lightsail"""
