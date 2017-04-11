@@ -28,13 +28,20 @@ controller.hears(['(get|bring).*beer'], Direct, (bot, message) => {
     bot.reply(message, 'No, I have no arms.');
 });
 
-controller.hears(['is.*(beer|friday)'], Direct, (bot, message) => {
+controller.hears(['(is|time).*(beer|friday)'], Direct, (bot, message) => {
     const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday',
         'Thursday', 'Friday', 'Saturday'];
     const date = new Date();
     const today = days[date.getDay()];
-    if (today == 'Friday')
-        bot.replay(message, 'Yes, is beer time!');
+    if (today == 'Friday') {
+        const beertime = 17;
+        const hours = date.getHours();
+        if (hours >= beertime)
+            bot.reply(message, 'Yes, it is beer time!');
+        else
+            bot.reply(message, `It is ${today}.. but it is before ${beertime}`);
+    }
+        
     else 
         bot.reply(message, `No, it is ${today}`);
 });
