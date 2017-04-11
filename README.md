@@ -8,5 +8,7 @@ Granted.. at this time I'm not certain what the goals are here.
 #### Goals
 * Learn to write cleaner nodejs
 * Make a slack bot
-* Help with Tivix lunch protocols for NY office
+* Help with Tivix lunch protocols for NepY office
 * Use TravisCI for CI/CD
+* Learn about real language parsers in nodejs (as opposed to rgexp
+* Do something simple with a raspberry pi with it. 
