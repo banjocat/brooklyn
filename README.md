@@ -11,4 +11,5 @@ Granted.. at this time I'm not certain what the goals are here.
 * Help with Tivix lunch protocols for NepY office
 * Use TravisCI for CI/CD
 * Learn about real language parsers in nodejs (as opposed to rgexp
-* Do something simple with a raspberry pi with it. 
+* Use MQTT and mosca for simple IOT actions
+* Have a raspberry pi setup with audio to speak commands from slack
