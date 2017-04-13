@@ -4,6 +4,8 @@ const google = require('googleapis');
 const googleAuth = require('google-auth-library');
 const _ = require('lodash');
 
+const secrets = JSON.parse(fs.readFileSync('./secrets.json'));
+
 // If modifying these scopes, delete your previously saved credentials
 // at ~/.credentials/sheets.googleapis.com-nodejs-quickstart.json
 var SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly'];
@@ -65,7 +67,7 @@ const accessSpreadsheet = (spreadsheetRange, callback) => {
             var sheets = google.sheets('v4');
             sheets.spreadsheets.values.get({
                 auth: auth,
-                spreadsheetId: process.env.SPREADSHEET_ID,
+                spreadsheetId: secrets.spreadsheet_id,
                 range: spreadsheetRange,
             }, function(err, response) {
                 if (err) {

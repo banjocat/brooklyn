@@ -1,17 +1,25 @@
-'use strict';
+'SPREADSHEET_IDuse strict';
 const fs = require('fs');
 const BotKit = require('botkit');
 const Greeting = require('./actions/greeting');
 const _ = require('lodash');
 const Spreadsheet = require('./models/spreadsheet.js');
 
+const secrets = JSON.parse(fs.readFileSync('./secrets.json'));
+
 const controller = BotKit.slackbot({
     json_file_store: './jsonstore/store.json',
 });
 
-const bot = controller.spawn({
-    token: process.env.BOT_TOKEN
-});
+let bot_config = {};
+if (process.env.ENV == 'dev') {
+    bot_config['token'] = secrets.queens_token;
+}
+else if (process.env.ENV == 'prod') {
+    bot_config['token'] = secrets.brooklyn_token;
+}
+
+const bot = controller.spawn(bot_config);
 
 const Direct = ['direct_message','direct_mention','mention'];
 
@@ -81,7 +89,7 @@ controller.hears(['list.*(food|eat)'], Direct, (bot, message) => {
 
 
 // Getting food choices
-controller.hears(['(choose|what|pick|eat|tell).*(food|eat)'], Direct, (bot, message) => {
+controller.hears(['(select|choose|what|pick|eat|tell).*(food|eat)'], Direct, (bot, message) => {
     Spreadsheet.getFoodWithHyperlink( (food) => {
         const foodNames = _.map(food, 'name');
         bot.reply(message, "I choose " + _.sample(foodNames));

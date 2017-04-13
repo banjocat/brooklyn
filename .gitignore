@@ -3,6 +3,6 @@ node_modules
 jsonstore
 *.pyc
 client_secret.json
-secrets.sh
+secrets.json
 .credentials
 .credentialssheets.googleapis.com-nodejs-quickstart.json

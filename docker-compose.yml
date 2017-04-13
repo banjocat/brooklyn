@@ -2,12 +2,11 @@ version: '2'
 services:
     bot:
         image: banjocat/tivix-brooklyn
-        build: .
+        build: ./slackbot/.
         volumes:
-            - "./jsonstore:/bot/jsonstore"
-            - "./client_secret.json:/bot/client_secret.json"
+            - "./slackbot/jsonstore:/bot/jsonstore"
+            - "./slackbot//client_secret.json:/bot/client_secret.json"
+            - "./slackbot/secrets.json:/bot/secrets.json"
             - ".credentials:/bot/.credentials"
         environment:
-            BOT_TOKEN: ${PRODUCTION_TOKEN}
-            SPREADSHEET_ID: ${SPREADSHEET_ID}
-            REPORT_CHANNEL: "#tivix-ny"
+            ENV: ${ENV}
