@@ -32,8 +32,8 @@ def deploy(bootstrap=False, ENV='prod'):
         # Now decrypt them
         decrypt('./slackbot/secrets.json.gpg', mode=run)
         decrypt('./slackbot/client_secret.json.gpg', mode=run)
-        run('chmod 400 secrets.json')
-        run('chmod 400 client_secret.json')
+        run('chmod 400 ./slackbot/secrets.json')
+        run('chmod 400 ./slackbot/client_secret.json')
         run('docker-compose pull')
         with hide('running'):
             if bootstrap:
