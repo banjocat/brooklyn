@@ -1,12 +1,16 @@
 version: '2'
 services:
-    bot:
-        image: banjocat/tivix-brooklyn
-        build: ./slackbot/.
-        volumes:
-            - "./slackbot/jsonstore:/bot/jsonstore"
-            - "./slackbot//client_secret.json:/bot/client_secret.json"
-            - "./slackbot/secrets.json:/bot/secrets.json"
-            - ".credentials:/bot/.credentials"
-        environment:
-            ENV: ${ENV}
+  bot:
+    image: banjocat/tivix-brooklyn
+    build: ./slackbot/.
+    volumes:
+      - "./slackbot/jsonstore:/bot/jsonstore"
+      - "./slackbot//client_secret.json:/bot/client_secret.json"
+      - "./slackbot/secrets.json:/bot/secrets.json"
+      - ".credentials:/bot/.credentials"
+    environment:
+      ENV: ${ENV}
+  mosca:
+    image: matteocollina/mosca
+    ports:
+      - "1883:1883"

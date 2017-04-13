@@ -4,6 +4,9 @@ const BotKit = require('botkit');
 const Greeting = require('./actions/greeting');
 const _ = require('lodash');
 const Spreadsheet = require('./models/spreadsheet.js');
+const MQTT = require('mqtt');
+
+const mqtt = MQTT.connect('mqtt://mosca');
 
 const secrets = JSON.parse(fs.readFileSync('./secrets.json'));
 
@@ -31,10 +34,17 @@ _.mapKeys(simple, (value, key) => {
     });
 });
 
+controller.hears('say (.+)', Direct, (bot, message) => {
+    const msg = message.match[1];
+    mqtt.publish('say',  msg);
+});
 
 controller.hears(['hello'], Direct, (bot, message) => {
-    bot.reply(message, Greeting());
+    const msg = Greeting();
+    bot.reply(message, msg);
+    mqtt.publish('say', msg);
 });
+
 
 
 controller.hears(['(is|time).*(beer|friday)'], Direct, (bot, message) => {
