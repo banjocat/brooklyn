@@ -25,7 +25,7 @@ def build():
 
 def deploy(bootstrap=False, ENV='prod'):
     """Deploy to jacks-instance on lightsail"""
-    run('mkdir -p /app/brooklyn-bot/slackbot')
+    run('mkdir -p /app/brooklyn-bot/{slackbot,voicebot}')
     with cd('/app/brooklyn-bot'):
         put('./docker-compose.yml', 'docker-compose.yml')
         put('./slackbot/secrets.json.gpg', './slackbot/.')
