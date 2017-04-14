@@ -21,6 +21,7 @@ def build():
     """Builds and pushes docker image"""
     local('docker-compose build')
     local('docker-compose push bot')
+    local('docker-compose push voicebot')
 
 def deploy(bootstrap=False, ENV='prod'):
     """Deploy to jacks-instance on lightsail"""
