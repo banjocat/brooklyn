@@ -57,8 +57,9 @@ controller.hears(['(is|time).*(beer|friday)'], Direct, (bot, message) => {
         const hours = date.getHours();
         if (hours >= beertime)
             bot.reply(message, 'Yes, it is beer time!');
-        else
-            bot.reply(message, `It is ${today}.. but it is before ${beertime}`);
+        else {
+            bot.reply(message, `It is ${today}.. but it is before 5.`);
+        }
     }
         
     else 

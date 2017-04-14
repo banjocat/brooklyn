@@ -11,6 +11,7 @@ client.on('connect', () => {
 client.on('message', (topic, message) => {
     // Interrupts any previous speech
     say.stop();
-    say.speak(message, 'voice_upc_ca_pau_hts', .9);
+    say.speak(message);
+    console.log('Recieved message and said something');
 });
 

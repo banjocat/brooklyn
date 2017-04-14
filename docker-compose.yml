@@ -10,7 +10,18 @@ services:
       - ".credentials:/bot/.credentials"
     environment:
       ENV: ${ENV}
+    depends_on:
+      - mosca
   mosca:
     image: matteocollina/mosca
     ports:
       - "1883:1883"
+  voicebot:
+    image: banojcat/voicebot
+    build: ./voicebot/.
+    environment:
+      MQTT_BROKER: mosca
+    devices:
+      - /dev/snd
+    depends_on:
+      - mosca
