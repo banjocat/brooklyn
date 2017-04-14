@@ -17,7 +17,7 @@ services:
     ports:
       - "1883:1883"
   voicebot:
-    image: banojcat/voicebot
+    image: banjocat/voicebot
     build: ./voicebot/.
     environment:
       MQTT_BROKER: mosca
