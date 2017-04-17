@@ -1,4 +1,3 @@
-[![Build Status](https://jenkins.tivixlabs.com/buildStatus/icon?job=brooklyn/master)](https://jenkins.tivixlabs.com/job/brooklyn/job/master/)
 # Brooklyn Tivix Bot
 
 This is a nodejs practice project.
