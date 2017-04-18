@@ -1,8 +1,8 @@
 pipeline {
     agent any
         environment {
-            SECRET_KEY = credentials("brooklyn_secret_key")
-            DOCKER_PASS = credentials("brooklyn_docker_password")
+            SECRET_KEY = credentials("gpg_secret_key")
+            DOCKER_PASS = credentials("docker_password")
             ENV = "PROD"
         }
     stages {
@@ -15,7 +15,7 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                sshagent(credentials: ['jacks_lightsail_ssh_login']) {
+                sshagent(credentials: ['ssh_key']) {
                 sh "fab deploy"
                 }
             }
