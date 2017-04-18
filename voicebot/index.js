@@ -1,6 +1,7 @@
 const say = require('say');
 const mqtt = require('mqtt');
 
+console.log('Bootstrapping');
 const client = mqtt.connect(`mqtt://${process.env.MQTT_BROKER}`)
 
 client.on('connect', () => {

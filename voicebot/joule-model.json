@@ -1,0 +1,12 @@
+{
+    "type": "model",
+    "series": "16",
+    "model": "joule",
+    "architecture": "armhf",
+    "gadget": "joule",
+    "kernel": "core",
+    "authority-id": "TODO",
+    "brand-id": "TODO",
+    "required-snaps": ["brooklyn-voice"],
+    "timestamp": "2017-04-18T04:04:04+00:00"
+}
