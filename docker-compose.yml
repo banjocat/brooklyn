@@ -16,12 +16,3 @@ services:
     image: matteocollina/mosca
     ports:
       - "1883:1883"
-  voicebot:
-    image: banjocat/voicebot
-    build: ./voicebot/.
-    environment:
-      MQTT_BROKER: mosca
-    devices:
-      - /dev/snd
-    depends_on:
-      - mosca
