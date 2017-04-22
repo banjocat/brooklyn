@@ -15,4 +15,5 @@ services:
   mosca:
     image: matteocollina/mosca
     ports:
+      - "8000:80"
       - "1883:1883"

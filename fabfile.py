@@ -21,11 +21,10 @@ def build():
     """Builds and pushes docker image"""
     local('docker-compose build')
     local('docker-compose push bot')
-    local('docker-compose push voicebot')
 
 def deploy(bootstrap=False, ENV='prod'):
     """Deploy to jacks-instance on lightsail"""
-    run('mkdir -p /app/brooklyn-bot/{slackbot,voicebot}')
+    run('mkdir -p /app/brooklyn-bot/slackbot')
     with cd('/app/brooklyn-bot'):
         put('./docker-compose.yml', 'docker-compose.yml')
         put('./slackbot/secrets.json.gpg', './slackbot/.')
