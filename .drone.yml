@@ -1,0 +1,12 @@
+pipeline:
+  build:
+    image: docker
+    commands:
+      - dlocker login -u banjocat -p $DOCKER_PASS
+      - docker-compose build
+      - docker-compose push bot
+  deploy:
+    image: banjocat/fabric-alpine
+    commands:
+      - fab deploy
+
