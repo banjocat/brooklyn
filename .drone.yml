@@ -2,7 +2,7 @@ pipeline:
   build:
     image: docker
     commands:
-      - dlocker login -u banjocat -p $DOCKER_PASS
+      - docker login -u banjocat -p $DOCKER_PASS
       - docker-compose build
       - docker-compose push bot
   deploy:
