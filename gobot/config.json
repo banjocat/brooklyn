@@ -1,0 +1,16 @@
+{
+    "Conversation":
+    {
+        "(when|can).*beer": "Beer is on Friday",
+        "pick.*day": "No. Pick a day yourself",
+        "portland": "NYC is better than portland",
+        "pizza": "I love pizza",
+        "(get|bring).*beer": "No, I have no arms.",
+        "attack kyle": "Attack plan underway.",
+        "it.*always.*5.*dumpster": "What does that even mean?",
+        "(hello|greetings)": "Greetings earthing!",
+        "pick.*food": "Golang brooklyn can't do that yet"
+    }
+}
+
+
