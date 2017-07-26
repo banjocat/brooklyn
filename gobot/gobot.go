@@ -151,7 +151,6 @@ func validEvent(message []byte, botId string) (bool, string, string) {
 
 func determineMessage(eventMessage string, config Config) (string) {
     for k, v := range config.Conversation {
-	log.Printf("k: %s v: %s", k, v)
 	reg := "(?i)" + k // Make it case insenstive
 	matched, err := regexp.Match(reg, []byte(eventMessage))
 	if (err != nil) {
