@@ -5,13 +5,15 @@ import (
     "os"
     "net/http"
     "encoding/json"
+    "strings"
     "github.com/gorilla/websocket"
 )
 
 type SlackAuthResponse struct{
-    Ok bool
-    Url string
-    Team map[string]*string
+    Ok bool		`json:"ok"`
+    Url string		`json:"url"`
+    Team interface{}	`json:"team"`
+    Self map[string]string `json:"self"`
 }
 
 type SlackMessage struct{
@@ -51,12 +53,15 @@ func main() {
 	log.Fatal(err)
     }
     defer response.Body.Close()
+    
     var slackAuthResponse SlackAuthResponse
     decoder := json.NewDecoder(response.Body)
     err = decoder.Decode(&slackAuthResponse)
     if (err != nil) {
 	log.Fatal(err)
     }
+    // Looking for <@BotId> in message to see if mentioned 
+    botIdtag := "<@" + slackAuthResponse.Self["id"] + ">"
     websocketUrl := slackAuthResponse.Url
     log.Printf("Websocket: %s", websocketUrl)
     conn, _, err := websocket.DefaultDialer.Dial(websocketUrl, nil)
@@ -77,15 +82,24 @@ func main() {
 	    log.Println(err)
 	    continue
 	}
-	eventType := event["type"].(string)
+
+	eventTypeInterface, ok := event["type"]
+	if !ok {
+	    continue
+	}
+	eventType := eventTypeInterface.(string)
 	if eventType != "message" {
+	    continue
+	}
+	eventMessage := event["text"].(string)
+	if !strings.Contains(eventMessage, botIdtag) {
 	    continue
 	}
 	slackMessage := SlackMessage{
 	    Id: 1,
 	    Type: "message",
 	    Channel: event["channel"].(string),
-	    Text: event["text"].(string),
+	    Text: "Yeah I got that",
 	}
 	slackMessageJson, err := json.Marshal(slackMessage)
 	log.Printf("sending: %s", slackMessageJson)
