@@ -112,7 +112,7 @@ func getSocketUrlAndBotId() (string, string, error) {
     }
     websocketUrl := slackAuthResponse.Url
     botId := slackAuthResponse.Self["id"]
-    log.Printf("Websocket: %s", websocketUrl)
+    log.Printf("Websocket: %s, botId: %s", websocketUrl, botId)
     return websocketUrl, botId, nil
 }
 

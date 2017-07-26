@@ -1,0 +1,24 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: gobot-deployment
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: gobot
+    spec:
+      containers:
+      - name: gobot
+        image: banjocat/brooklyngobot
+        resources:
+          requests:
+            cpu: ".001"
+            memory: 100Mi
+        env:
+          - name: TOKE
+            valueFrom:
+              secretKeyRef:
+                name: brooklyn
+                key: TOKEN
