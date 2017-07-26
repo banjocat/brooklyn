@@ -9,7 +9,9 @@
         "attack kyle": "Attack plan underway.",
         "it.*always.*5.*dumpster": "What does that even mean?",
         "(hello|greetings)": "Greetings earthing!",
-        "pick.*food": "Golang brooklyn can't do that yet"
+        "pick.*food": "Golang brooklyn can't do that yet",
+        "is back": "Yes, Brooklyn is back!",
+        "is.*it.*beer": "I do not know. I can't tell time anymore."
     }
 }
 

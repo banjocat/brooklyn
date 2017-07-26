@@ -16,6 +16,7 @@ type SlackAuthResponse struct{
     Url string		`json:"url"`
     Team interface{}	`json:"team"`
     Self map[string]string `json:"self"`
+    Error string	`json:"error"`
 }
 
 type SlackMessage struct{
@@ -110,9 +111,14 @@ func getSocketUrlAndBotId() (string, string, error) {
     if (err != nil) {
 	log.Fatal(err)
     }
+    ok := slackAuthResponse.Ok
+    if !ok {
+	log.Fatal(slackAuthResponse.Error)
+    }
+
     websocketUrl := slackAuthResponse.Url
     botId := slackAuthResponse.Self["id"]
-    log.Printf("Websocket: %s, botId: %s", websocketUrl, botId)
+    log.Printf("Ok: %s, Websocket: %s, botId: %s", ok, websocketUrl, botId)
     return websocketUrl, botId, nil
 }
 

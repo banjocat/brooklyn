@@ -17,7 +17,7 @@ spec:
             cpu: ".001"
             memory: 100Mi
         env:
-          - name: TOKE
+          - name: TOKEN
             valueFrom:
               secretKeyRef:
                 name: brooklyn

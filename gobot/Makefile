@@ -1,9 +1,9 @@
-.PHONY: help
+.PHONY: help docker push deploy
 
 help:
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
-gobot: gobot.go ## Builds golang
+gobot: gobot.go config.json## Builds golang
 	go build gobot.go
 
 docker: gobot ## Builds the docker image
