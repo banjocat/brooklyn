@@ -11,7 +11,8 @@
         "(hello|greetings)": "Greetings earthing!",
         "pick.*food": "Golang brooklyn can't do that yet",
         "is back": "Yes, Brooklyn is back!",
-        "(is.*it.*beer|beertime)": "I do not know. I can't tell time anymore."
+        "(is.*it.*beer|beertime)": "I do not know. I can't tell time anymore.",
+        "do you use goroutines": "Yes. That is why I am so fast."
     }
 }
 

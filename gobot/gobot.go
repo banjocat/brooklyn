@@ -28,6 +28,7 @@ type SlackMessage struct {
 
 type Config struct {
 	Conversation map[string]string
+	BotId string
 }
 
 func init() {
@@ -50,6 +51,7 @@ func main() {
 		log.Fatal(err)
 	}
 	config, err := getConfig()
+	config.BotId = botId
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -60,26 +62,34 @@ func main() {
 			log.Println(err)
 			continue
 		}
-		ok, eventChannel, eventMessage := validEvent(message, botId)
-		if !ok {
-			continue
-		}
-		log.Printf("recv: %s", message)
-		messageToSend := determineMessage(eventMessage, config)
-		if messageToSend == "" {
-			continue
-		}
-		slackMessage := SlackMessage{
-			Id:      1,
-			Type:    "message",
-			Channel: eventChannel,
-			Text:    messageToSend,
-		}
-		slackMessageJson, err := json.Marshal(slackMessage)
-		log.Printf("sending: %s", slackMessageJson)
-		conn.WriteMessage(websocket.TextMessage, slackMessageJson)
+		go consumeMessage(conn, message, config)
 	}
-	defer conn.Close()
+}
+
+func consumeMessage(conn *websocket.Conn, message []byte, config Config) {
+	ok, eventChannel, eventMessage := validEvent(message, config.BotId)
+	if !ok {
+		return
+	}
+	log.Printf("recv: %s", message)
+	messageToSend := determineMessage(eventMessage, config)
+	if messageToSend == "" {
+		return
+	}
+	slackMessage := SlackMessage{
+		Id:      1,
+		Type:    "message",
+		Channel: eventChannel,
+		Text:    messageToSend,
+	}
+	slackMessageJson, err := json.Marshal(slackMessage)
+	if (err != nil) {
+	    log.Println(err)
+			return
+	}
+	
+	log.Printf("sending: %s", slackMessageJson)
+	conn.WriteMessage(websocket.TextMessage, slackMessageJson)
 }
 
 func getConfig() (Config, error) {
